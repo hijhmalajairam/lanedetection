@@ -484,6 +484,7 @@ def upload():
         return jsonify({"status": "error", "error": "No file selected"})
     
     # Save to uploads folder
+    os.makedirs('uploads', exist_ok=True)
     save_path = os.path.join('uploads', file.filename)
     file.save(save_path)
     print(f"Uploaded: {file.filename} -> {save_path}")
