@@ -437,7 +437,11 @@ def gen_frames():
         
         success, frame = cap.read()
         if not success:
-            cap.set(cv2.CAP_PROP_POS_FRAMES, 0)  # Loop
+            # Linux OpenCV bug fix: CAP_PROP_POS_FRAMES often fails on Render.
+            cap.release()
+            cap = cv2.VideoCapture(current_video)
+            pipeline.left_line.reset()
+            pipeline.right_line.reset()
             continue
         
         try:
