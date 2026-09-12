@@ -11,7 +11,7 @@ Submitted by:
 
 Faculty Name:
 **Dr. P. Chakradhar**
-Sr. Asst. Prof., Dept. of CSE
+Sr. Asst. Prof., Dept. of AI&DS
 
 Faculty of Science & Technology
 IFHE University, Hyderabad
