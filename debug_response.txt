@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ADAS Web Command Center</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #121212; color: #fff; margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        .video-container { flex: 3; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .controls { flex: 1; background: #1e1e1e; padding: 30px; box-sizing: border-box; overflow-y: auto; box-shadow: -5px 0 15px rgba(0,0,0,0.5); }
+        img { max-width: 100%; max-height: 90vh; border: 4px solid #333; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        h1 { margin-top: 0; color: #00e5ff; }
+        h2 { font-size: 16px; border-bottom: 1px solid #444; padding-bottom: 5px; margin-top: 30px; color: #aaa; text-transform: uppercase; letter-spacing: 1px; }
+        .slider-container { margin-bottom: 25px; }
+        .slider-container label { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 8px; font-size: 14px;}
+        input[type=range] { width: 100%; cursor: pointer; accent-color: #00e5ff; }
+        .btn-group { display: flex; gap: 10px; margin-bottom: 15px; }
+        button { flex: 1; background: #2d2d2d; color: #fff; border: 1px solid #444; padding: 12px; cursor: pointer; border-radius: 6px; font-weight: bold; transition: 0.2s;}
+        button:hover { background: #3d3d3d; border-color: #00e5ff; }
+        button:active { background: #00e5ff; color: #000; }
+        .checkbox-container { display: flex; align-items: center; gap: 10px; margin-top: 20px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        input[type=checkbox] { width: 20px; height: 20px; accent-color: #00e5ff; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <h2 style="color: #666; border: none; margin: 0 0 15px 0;">Live ADAS Camera Feed</h2>
+        <img src="/video_feed">
+    </div>
+    
+    <div class="controls">
+        <h1>Control Panel</h1>
+        
+        <h2>Dynamic Horizon Calibration</h2>
+        <p style="font-size: 12px; color: #888; line-height: 1.5;">Drag the sliders to instantly recalibrate the camera perspective for different vehicles or road types.</p>
+        
+        <div class="slider-container">
+            <label>Top Cutoff (Y-Axis) <span id="top_y_val">0.63</span></label>
+            <input type="range" id="top_y" min="0.4" max="0.8" step="0.01" value="0.63">
+        </div>
+        
+        <div class="slider-container">
+            <label>Bottom Cutoff (Y-Axis) <span id="bottom_y_val">0.95</span></label>
+            <input type="range" id="bottom_y" min="0.7" max="1.0" step="0.01" value="0.95">
+        </div>
+        
+        <div class="slider-container">
+            <label>Horizon Width <span id="top_w_val">0.10</span></label>
+            <input type="range" id="top_w" min="0.05" max="0.5" step="0.01" value="0.10">
+        </div>
+        
+        <h2>Turn Signals</h2>
+        <div class="btn-group">
+            <button onclick="setSignal('left')">Left</button>
+            <button onclick="setSignal('right')">Right</button>
+            <button onclick="setSignal(null)">Off</button>
+        </div>
+        
+        <h2>UI Overlay</h2>
+        <label class="checkbox-container">
+            <input type="checkbox" id="dashboard" checked> 
+            Show Engineer's Dashboard
+        </label>
+    </div>
+
+    <script>
+        // API Interface for Reactivity
+        function updateSettings(data) {
+            fetch('/settings', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            });
+        }
+
+        // Connect Sliders
+        ['top_y', 'bottom_y', 'top_w'].forEach(id => {
+            document.getElementById(id).addEventListener('input', function() {
+                document.getElementById(id + '_val').innerText = this.value;
+                let payload = {};
+                payload[id] = parseFloat(this.value);
+                updateSettings(payload);
+            });
+        });
+
+        // Connect Checkbox
+        document.getElementById('dashboard').addEventListener('change', function() {
+            updateSettings({show_dashboard: this.checked});
+        });
+
+        // Connect Buttons
+        function setSignal(dir) {
+            updateSettings({turn_signal: dir});
+        }
+    </script>
+</body>
+</html>

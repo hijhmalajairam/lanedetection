@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ADAS Web Command Center</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #121212; color: #fff; margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        .video-container { flex: 3; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .controls { flex: 1; background: #1e1e1e; padding: 30px; box-sizing: border-box; overflow-y: auto; box-shadow: -5px 0 15px rgba(0,0,0,0.5); }
+        img { max-width: 100%; max-height: 90vh; border: 4px solid #333; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        h1 { margin-top: 0; color: #00e5ff; }
+        h2 { font-size: 16px; border-bottom: 1px solid #444; padding-bottom: 5px; margin-top: 30px; color: #aaa; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-group { display: flex; gap: 10px; margin-bottom: 15px; }
+        button { flex: 1; background: #2d2d2d; color: #fff; border: 1px solid #444; padding: 12px; cursor: pointer; border-radius: 6px; font-weight: bold; transition: 0.2s;}
+        button:hover { background: #3d3d3d; border-color: #00e5ff; }
+        button:active { background: #00e5ff; color: #000; }
+        .checkbox-container { display: flex; align-items: center; gap: 10px; margin-top: 20px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        input[type=checkbox] { width: 20px; height: 20px; accent-color: #00e5ff; cursor: pointer; }
+        .info-box { background: #2a2a2a; border-left: 3px solid #00e5ff; padding: 12px 15px; margin-top: 20px; border-radius: 4px; font-size: 13px; color: #ccc; line-height: 1.6; }
+        .info-box strong { color: #00e5ff; }
+        .feature-list { list-style: none; padding: 0; margin: 15px 0; }
+        .feature-list li { padding: 8px 0; border-bottom: 1px solid #2a2a2a; font-size: 14px; }
+        .feature-list li::before { content: "✓ "; color: #00e5ff; font-weight: bold; }
+        .status { font-size: 12px; color: #00e5ff; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <h2 style="color: #666; border: none; margin: 0 0 15px 0;">Live ADAS Camera Feed</h2>
+        <img src="/video_feed">
+    </div>
+    
+    <div class="controls">
+        <h1>Control Panel</h1>
+        
+        <h2>Active Features</h2>
+        <ul class="feature-list">
+            <li>Lane Departure Warning (LDWS)</li>
+            <li>Lane Keep Assist Steering (LKAS)</li>
+            <li>Forward Collision Warning (FCW)</li>
+            <li>Traffic Sign Detection</li>
+            <li>Kalman Filter Tracking</li>
+        </ul>
+
+        <h2>Turn Signals</h2>
+        <div class="btn-group">
+            <button onclick="setSignal('left')">&#x2B05; Left</button>
+            <button onclick="setSignal('right')">Right &#x27A1;</button>
+            <button onclick="setSignal(null)">Off</button>
+        </div>
+        
+        <h2>UI Overlay</h2>
+        <label class="checkbox-container">
+            <input type="checkbox" id="dashboard" checked> 
+            Show Engineer's Dashboard
+        </label>
+
+        <div class="info-box">
+            <strong>Kalman Filters Active</strong><br>
+            Lane tracking uses physics-based prediction. If a vehicle blocks the lane lines, the system will predict their position until they become visible again.
+        </div>
+        
+        <div class="status" id="status"></div>
+    </div>
+
+    <script>
+        function sendSettings(data) {
+            fetch('/settings', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            }).then(() => {
+                document.getElementById('status').innerText = 'Applied ✓';
+                setTimeout(() => document.getElementById('status').innerText = '', 1500);
+            });
+        }
+
+        document.getElementById('dashboard').addEventListener('change', function() {
+            sendSettings({show_dashboard: this.checked});
+        });
+
+        function setSignal(dir) {
+            sendSettings({turn_signal: dir});
+        }
+    </script>
+</body>
+</html>

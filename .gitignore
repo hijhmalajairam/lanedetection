@@ -1,0 +1,6 @@
+uploads/
+__pycache__/
+*.caffemodel
+*.prototxt
+*.xml
+output_video.mp4
