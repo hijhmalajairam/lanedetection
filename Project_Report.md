@@ -5,9 +5,9 @@ On
 **FittingLines: Development of an Automated Lane Departure Warning System using Line Fitting and Object Detection**
 
 Submitted by:
-**[Your Name]**
-**[Your Regd. No.]**
-**[Your Program]**
+**HIJHMALA JAIRAM**
+**24STUCHH010669**
+**BTECH-AI&DS**
 
 Faculty Name:
 **Dr. P. Chakradhar**
