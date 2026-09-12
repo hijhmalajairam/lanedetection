@@ -62,31 +62,17 @@ HTML_PAGE = """<!DOCTYPE html>
     <div class="controls">
         <h1>Control Panel</h1>
 
-        <h2>Upload Video</h2>
+        <h2 style="display: flex; align-items: center;">Upload Video <span style="color:#ffaa00; font-size:11px; border:1px solid #ffaa00; padding:2px 6px; border-radius:10px; margin-left:10px;">BETA</span></h2>
         <div class="upload-zone" id="dropzone" onclick="document.getElementById('fileInput').click()">
             <div class="icon">&#128249;</div>
             <p><strong>Click or Drag & Drop</strong></p>
             <p>Upload any dashcam video (.mp4, .avi, .mov)</p>
+            <p style="color:#ffaa00; font-size:11px; margin-top:5px; font-style:italic;">(Experimental: Large videos may crash free cloud servers)</p>
             <input type="file" id="fileInput" accept="video/*">
         </div>
         <button style="width:100%; margin-top:10px; background:#0055ff; color:#fff; border:none; padding:10px; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="switchVideo('test_videos/project_video.mp4', 'Main Video')">&#10227; Reset to Main Video (Completed)</button>
         <div class="now-playing" id="nowPlaying">Now playing: project_video.mp4</div>
         <div class="status" id="status"></div>
-
-        <h2 style="color: #ffaa00; margin-top: 25px;">🚧 Experimental (WIP)</h2>
-        <p style="font-size: 11px; color: #aaa; margin-top: -10px; margin-bottom: 10px;">Calibration models for these test videos are still under development.</p>
-        <style>
-            .video-list { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px; }
-            .vid-btn { background: #222; border: 1px solid #444; color: #ccc; padding: 6px; border-radius: 4px; font-size: 11px; cursor: pointer; transition: 0.2s; flex: 1 1 45%; }
-            .vid-btn:hover { background: #ffaa00; color: #000; border-color: #ffaa00; font-weight: bold; }
-        </style>
-        <div class="video-list">
-            <button class="vid-btn" onclick="switchVideo('C:/Users/Asus/Downloads/videos/13588904_3840_2160_30fps.mp4', 'WIP: Dashcam 1')">Test Video 1</button>
-            <button class="vid-btn" onclick="switchVideo('C:/Users/Asus/Downloads/videos/13858526-hd_1920_1080_50fps.mp4', 'WIP: Dashcam 2')">Test Video 2</button>
-            <button class="vid-btn" onclick="switchVideo('C:/Users/Asus/Downloads/videos/16094915_1920_1080_50fps.mp4', 'WIP: Dashcam 3')">Test Video 3</button>
-            <button class="vid-btn" onclick="switchVideo('C:/Users/Asus/Downloads/videos/5382495-uhd_3840_2160_24fps.mp4', 'WIP: Dashcam 4')">Test Video 4</button>
-            <button class="vid-btn" onclick="switchVideo('C:/Users/Asus/Downloads/videos/855980-hd_1920_1080_30fps.mp4', 'WIP: Dashcam 5')">Test Video 5</button>
-        </div>
 
         <h2>Camera Calibration</h2>
         <label class="checkbox-container" style="font-size: 13px; margin-top: 5px; margin-bottom: 15px; color: #00e5ff;">
