@@ -247,10 +247,10 @@ class LDWSPipeline:
                         cv2.putText(frame, label, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color_box, 2)
                         
                         car_center_x = x + w_box/2
-                        # Widen lane detection so cars in adjacent lanes can trigger it occasionally
-                        in_lane = (w//2 - 400 < car_center_x < w//2 + 400)
-                        # Increase distance sensitivity so it triggers very easily
-                        if dist_m < 60 and in_lane:
+                        # Balanced lane detection
+                        in_lane = (w//2 - 250 < car_center_x < w//2 + 250)
+                        # Balanced distance sensitivity
+                        if dist_m < 35 and in_lane:
                             fcw_warning = True
                             
                         # Plot on Top-Down Radar Map
@@ -287,7 +287,7 @@ class LDWSPipeline:
                 self.left_line.reset()
                 self.right_line.reset()
 
-            warning = abs(offset_m) > 0.15
+            warning = abs(offset_m) > 0.35
             if (offset_m > 0 and self.turn_signal == 'right') or (offset_m < 0 and self.turn_signal == 'left'):
                 warning = False
             
