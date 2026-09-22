@@ -150,11 +150,11 @@ class LDWSPipeline:
             pts = np.hstack((pts_left, pts_right))
 
             # Turn signal visualization
-            if self.turn_signal == 'left':
-                cv2.fillPoly(color_warp, np.int_([pts_left]), (0, 255, 255))
-            elif self.turn_signal == 'right':
-                cv2.fillPoly(color_warp, np.int_([pts_right]), (0, 255, 255))
+            if self.turn_signal == 'left' or self.turn_signal == 'right':
+                # Draw the whole polygon yellow to indicate a turn
+                cv2.fillPoly(color_warp, np.int_([pts]), (0, 255, 255))
             else:
+                # Normal green tracking polygon
                 cv2.fillPoly(color_warp, np.int_([pts]), (0, 255, 0))
 
         newwarp = warp_perspective(color_warp, self.Minv)
