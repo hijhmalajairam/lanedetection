@@ -8,7 +8,7 @@
 A full-stack Advanced Driver Assistance System (ADAS) built from scratch using Python, OpenCV, and Flask. This project processes dashcam video in real-time to detect lane lines, track vehicles, identify traffic signs, and issue audio-visual collision warnings.
 
 ### 🌐 Live Demo & Links
-* **Live Website (Render):** [https://lanedetection-h4wf.onrender.com/](https://lanedetection-h4wf.onrender.com/)
+* **Live Website (Render):** [https://lanedetection-h4wf.onrender.com/](https://lanedetection-h4wf.onrender.com/)(temporarily suspened- will reopen on 1st oct)
 * **GitHub Repository:** [hijhmalajairam/lanedetection](https://github.com/hijhmalajairam/lanedetection)
 
 *(**Note on Live Demo:** This project is hosted on a free Render cloud server. If the site hasn't been visited in 15 minutes, the server goes to "sleep". It may take up to 50 seconds to wake up on your first visit!)*
